@@ -1,15 +1,16 @@
-import { MailerModule } from '@nestjs-modules/mailer';
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 
+@Global()
 @Module({
   imports: [
     MailerModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
         transport: {
-          host: config.get('MAIL_HOST'),
+          host: config.get('SMTP_HOST'),
           secure: false,
           auth: {
             user: config.get('SMTP_USERNAME'),
@@ -17,11 +18,11 @@ import { join } from 'path';
           },
         },
         defaults: {
-          from: `NEST mAiL ${config.get('SMTP_USERNAME')}`,
+          from: `G>TEcHnOlGy ${config.get('SMTP_USERNAME')}`,
         },
         template: {
           adapter: new EjsAdapter(),
-          dir: join(__dirname + 'templates'),
+          dir: join(__dirname, './templates'),
           options: {
             strict: false,
           },
