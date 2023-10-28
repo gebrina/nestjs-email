@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { EmailService } from 'src/email/email.service';
 import { Payment } from 'src/interfaces/payment.interface';
 
@@ -8,6 +8,7 @@ export class PaymentService {
 
   async create(payment: Payment) {
     const { user } = payment;
-    return this.emailService.sendEmail(user, payment);
+    if (user) return this.emailService.sendEmail(user, payment);
+    throw new BadRequestException('Please provide valid payment info');
   }
 }
