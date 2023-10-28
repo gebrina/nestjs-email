@@ -7,5 +7,7 @@ export class PaymentController {
   constructor(private paymentService: PaymentService) {}
 
   @Post()
-  create(@Body() payment: Payment) {}
+  create(@Body() payment: Payment) {
+    return this.paymentService.create(payment);
+  }
 }
