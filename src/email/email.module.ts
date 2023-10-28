@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
+import { EmailService } from './email.service';
 
 @Global()
 @Module({
@@ -31,5 +32,7 @@ import { join } from 'path';
       inject: [ConfigService],
     }),
   ],
+  providers: [EmailService],
+  exports: [EmailService],
 })
 export class EmailModule {}
